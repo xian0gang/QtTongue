@@ -12,3 +12,4 @@ void kmeans(IplImage* src,IplImage* dst);
 void chuli(IplImage* img,IplImage* dst);
 void max_liantong(IplImage* src,IplImage* dst);
 IplImage* reverse(IplImage* img);
+

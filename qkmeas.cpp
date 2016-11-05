@@ -119,59 +119,23 @@ cvShowImage("dst",dst);
 /**去掉过小的洞，并腐蚀膨胀***/
 void chuli(IplImage* src,IplImage *dst)
 {
-//    CvSeq* contour = 0;
-////        IplImage* dst = cvCreateImage(cvGetSize(src), 8, 1);
-//CvMemStorage* storage = cvCreateMemStorage(0);
 
-//    cvFindContours( src, storage, &contour, sizeof(CvContour),
-//                    CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE );
-//    cvZero(dst);        // 清空数组
-
-//    double maxarea = 5000;
-//    double minarea = 4000;
-//    int m = 0;
-//    for( ; contour != 0; contour = contour->h_next )
-//    {
-
-//        double tmparea = fabs(cvContourArea(contour));
-//        if(tmparea < minarea)
-//        {
-//            cvSeqRemove(contour, 0); // 删除面积小于设定值的轮廓
-//            continue;
-//        }
-//        CvRect aRect = cvBoundingRect( contour, 0 );
-//        if ((aRect.width/aRect.height)<1)
-//        {
-//            cvSeqRemove(contour, 0); //删除宽高比例小于设定值的轮廓
-//            continue;
-//        }
-//        if(tmparea > maxarea)
-//        {
-//            maxarea = tmparea;
-//        }
-//        m++;
-//        // 创建一个色彩值
-//        CvScalar color = CV_RGB( 0, 255, 255 );
-
-//        //max_level 绘制轮廓的最大等级。如果等级为0，绘制单独的轮廓。如果为1，绘制轮廓及在其后的相同的级别下轮廓
-//        //如果值为2，所有的轮廓。如果等级为2，绘制所有同级轮廓及所有低一级轮廓，诸此种种
-//        //如果值为负数，函数不绘制同级轮廓，但会升序绘制直到级别为abs(max_level)-1的子轮廓
-//        cvDrawContours(dst, contour, color, color, -1, 1, 8);   //绘制外部和内部的轮廓
-//        cvDrawContours(dst, contour, CV_RGB(255, 255, 255),
-//                       CV_RGB(255, 255, 255), 0, CV_FILLED, 8, cvPoint(0, 0));   //绘制外部和内部的轮廓
-//    }
 /***************************/
-    max_liantong(src,dst);
 
+    max_liantong(src,src);
+
+    cvNot(src,src);
+    max_liantong(src,dst);
+    cvNot(dst,dst);
 /***************************/
 //        /*先膨胀在腐蚀*/
 //            IplImage *img_erode = cvCreateImage(cvGetSize(dst), 8, 1);
         IplImage *img_dilate = cvCreateImage(cvGetSize(dst), 8, 1);
 
-//       cvDilate( dst,img_dilate, NULL,1); /
+//       cvDilate( dst,img_dilate, NULL,1);
         cvErode( dst,dst, NULL,1); //腐蚀
         cvDilate( dst,dst, NULL,2);
-        cvErode( dst,dst, NULL,3); //腐蚀
+        cvErode( dst,dst, NULL,2); //腐蚀
         IplImage * temp = cvCreateImage(cvGetSize(dst), 8,1);
 //cvMorphologyEx(dst,dst,temp,NULL,CV_MOP_OPEN,1);
 //            cvShowImage("腐蚀",img_erode);
